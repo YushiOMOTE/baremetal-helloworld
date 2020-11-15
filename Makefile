@@ -1,5 +1,7 @@
 .PHONY: setup build run clean
 
+qemu ?= qemu-system-x86_64
+
 target-dir = target/helloworld/release
 bootloader-target-dir = target/x86_64-bootloader/release
 
@@ -14,8 +16,8 @@ setup:
 
 build: $(bootloader-bin)
 
-run:
-	qemu-system-x86_64 -drive format=raw,file=$(bootloader-dir)/$(bootloader-bin)
+run: build
+	$(qemu) -drive format=raw,file=$(bootloader-dir)/$(bootloader-bin)
 
 clean:
 	cargo xbuild clean
