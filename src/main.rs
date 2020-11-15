@@ -1,7 +1,6 @@
 #![no_std]
 #![no_main]
 
-
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     let vga = 0xb8000 as *mut u8;
