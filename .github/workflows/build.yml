@@ -1,4 +1,4 @@
-name: run
+name: build
 
 on: [push]
 
