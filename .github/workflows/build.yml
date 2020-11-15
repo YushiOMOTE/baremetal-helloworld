@@ -1,0 +1,23 @@
+name: run
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Rust nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+      - name: Install dependencies
+        run: make setup
+      - name: Build the image
+        run: make build
+      - name: Test
+        run: |
+          sudo apt-get install qemu xorg-dev
+          make test
