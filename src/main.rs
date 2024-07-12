@@ -13,7 +13,9 @@ fn main() {
     } else {
         cmd.arg("-drive").arg(format!("format=raw,file={bios_path}"));
     }
+    cmd.arg("-device").arg("isa-debug-exit,iobase=0xf4,iosize=0x04");
     cmd.arg("-serial").arg("stdio");
+    cmd.arg("-display").arg("none");
     let mut child = cmd.spawn().unwrap();
     child.wait().unwrap();
 }
