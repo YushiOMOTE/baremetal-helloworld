@@ -1,0 +1,10 @@
+[package]
+name = "kernel"
+version = "0.1.0"
+authors = ["Yushi OMOTE <yushiomote@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+bootloader_api = "0.11.7"
+com_logger = "0.1.2"
+log = "0.4.22"

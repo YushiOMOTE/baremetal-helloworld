@@ -1,21 +1,19 @@
-#![no_std]
-#![no_main]
+fn main() {
+    // read env variables that were set in build script
+    let uefi_path = env!("UEFI_PATH");
+    let bios_path = env!("BIOS_PATH");
+    
+    // choose whether to start the UEFI or BIOS image
+    let uefi = std::env::var("USE_UEFI").as_deref() == Ok("1");
 
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
-    let vga = 0xb8000 as *mut u8;
-
-    for (i, b) in b"Hello world".iter().enumerate() {
-        unsafe {
-            *vga.offset(i as isize * 2) = *b;
-            *vga.offset(i as isize * 2 + 1) = 0x0f;
-        }
+    let mut cmd = std::process::Command::new("qemu-system-x86_64");
+    if uefi {
+        cmd.arg("-bios").arg(ovmf_prebuilt::ovmf_pure_efi());
+        cmd.arg("-drive").arg(format!("format=raw,file={uefi_path}"));
+    } else {
+        cmd.arg("-drive").arg(format!("format=raw,file={bios_path}"));
     }
-
-    loop {}
-}
-
-#[panic_handler]
-fn panic(__info: &core::panic::PanicInfo) -> ! {
-    loop {}
+    cmd.arg("-serial").arg("stdio");
+    let mut child = cmd.spawn().unwrap();
+    child.wait().unwrap();
 }
