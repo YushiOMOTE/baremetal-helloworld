@@ -1,21 +1,23 @@
 # A x86 bare-metal hello-world in Rust
 
-[![Actions Status](https://github.com/YushiOMOTE/baremetal-helloworld/workflows/run/badge.svg)](https://github.com/YushiOMOTE/baremetal-helloworld/actions)
+[![Actions Status](https://github.com/YushiOMOTE/baremetal-helloworld/workflows/build/badge.svg)](https://github.com/YushiOMOTE/baremetal-helloworld/actions)
 
-A minimum example for x86 bare-metal in Rust.
+A minimum example for x86 bare-metal in Rust. As of 2024/07.
+
+### Setup
+
+Use `nightly`
+
+```sh
+rustup target add x86_64-unknown-none
+rustup component add rust-src
+rustup component add llvm-tools-preview
+```
 
 ### Build
 
-Install dependencies.
-
 ```sh
-make setup
-```
-
-Build the image.
-
-```sh
-make build
+cargo build
 ```
 
 ### Run
