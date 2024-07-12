@@ -7,6 +7,8 @@ A minimum example for x86 bare-metal in Rust. As of 2024/07.
 * Builds bootable image on x86 bare-metal.
 * Prints hello world on Qemu.
 
+The project basically follows [the guide in the `bootloader` project](https://github.com/rust-osdev/bootloader).
+
 ### Setup
 
 Use `nightly` Rust.
@@ -70,3 +72,10 @@ INFO : Jumping to kernel entry point at VirtAddr(0x8000002d30)
 ```
 
 See the CI results for full setup and execution.
+
+### Structure
+
+The repository consists of 2 crates:
+
+* `os`: This project builds the bootable image, wrapping the artifact from `kernel` crate. Calls Qemu loading the bootable image on it.
+* `kernel`: The kernel to be loaded by the bootloader with entry point. Contains the bare minimum logic as a demo.
